@@ -1,8 +1,5 @@
 {
   "dependencies": {
-    "axios": "^0.19.0",
-    "bible-search": "^1.0.5",
-    "bible.js": "^4.0.1",
     "node-fetch": "^2.6.0",
     "request": "^2.88.0",
     "telegraf": "^3.30.1"
