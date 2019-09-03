@@ -9,6 +9,10 @@ const hashCode = (s) => {
   return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
 };
 
+require('http').createServer().listen(process.env.PORT || 5000).on('request', function(req, res){
+    res.end('')
+})
+
 const search = async (query = 'Ин 3.16') => {
   let res;
   let data = await axios.get(url, {
