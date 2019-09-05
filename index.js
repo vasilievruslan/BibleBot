@@ -5,6 +5,7 @@ const bot = new Telegraf(botToken)
 const url = 'https://api.bibleonline.ru/bible';
 const bible = require('./ru_synodal.json');
 const verses = require('./verses.json');
+const expressApp = express();
 const reg = /(\d*)\s*([а-я]+)\s*(\d+)(?:.(\d+))?(\s*-\s*(\d+)(?:\s*([а-я]+)\s*(\d+))?(?::(\d+))?)?/i
 const hashCode = (s) => {
   return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
@@ -85,6 +86,13 @@ bot.on('inline_query', async ({update, inlineQuery, answerInlineQuery }) => {
   return answerInlineQuery(results)
 })
 
-// console.log(search('бт 1 1'))
-bot.launch()
-// console.log('bot started')
+expressApp.use(bot.webhookCallback('/secret-path'))
+bot.telegram.setWebhook('https://server.tld:8443/secret-path')
+
+expressApp.get('/', (req, res) => {
+  res.send('Telegram Bible bot')
+})
+
+expressApp.listen(3000, () => {
+  console.log('Example app listening on port 3000!')
+})
