@@ -5,6 +5,7 @@ const bot = new Telegraf(botToken)
 const url = 'https://api.bibleonline.ru/bible';
 const bible = require('./ru_synodal.json');
 const verses = require('./verses.json');
+const express = require('express');
 const expressApp = express();
 const reg = /(\d*)\s*([а-я]+)\s*(\d+)(?:.(\d+))?(\s*-\s*(\d+)(?:\s*([а-я]+)\s*(\d+))?(?::(\d+))?)?/i
 const hashCode = (s) => {
