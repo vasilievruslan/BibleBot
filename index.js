@@ -5,19 +5,17 @@ const bot = new Telegraf(botToken)
 const url = 'https://api.bibleonline.ru/bible';
 const bible = require('./ru_synodal.json');
 const verses = require('./verses.json');
-const express = require('express');
-const expressApp = express();
-const reg = /(\d*)\s*([а-я]+)\s*(\d+)(?:.(\d+))?(\s*-\s*(\d+)(?:\s*([а-я]+)\s*(\d+))?(?::(\d+))?)?/i
-const hashCode = (s) => {
-  return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
-};
 
-require('http').createServer().listen(process.env.PORT || 5000).on('request', function(req, res){
-    res.end('')
+const express = require('express')
+const expressApp = express()
+
+const port = process.env.PORT || 3000
+expressApp.get('/', (req, res) => {
+  res.send('Hello World!')
 })
-
-
-
+expressApp.listen(port, () => {
+  console.log(`Listening on port ${port}`)
+})
 
 const search = (query) => {
   var res = [];
@@ -87,13 +85,4 @@ bot.on('inline_query', async ({update, inlineQuery, answerInlineQuery }) => {
   return answerInlineQuery(results)
 })
 
-expressApp.use(bot.webhookCallback('/secret-path'))
-bot.telegram.setWebhook('https://server.tld:8443/secret-path')
-
-expressApp.get('/', (req, res) => {
-  res.send('Telegram Bible bot')
-})
-
-expressApp.listen(3000, () => {
-  console.log('Example app listening on port 3000!')
-})
+bot.launch()
