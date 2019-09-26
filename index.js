@@ -5,9 +5,13 @@ const bot = new Telegraf(botToken)
 const url = 'https://api.bibleonline.ru/bible';
 const bible = require('./ru_synodal.json');
 const verses = require('./verses.json');
-
+const reg = /(\d*)\s*([а-я]+)\s*(\d+)(?:.(\d+))?(\s*-\s*(\d+)(?:\s*([а-я]+)\s*(\d+))?(?::(\d+))?)?/i;
+const hashCode = (s) => {
+  return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
+};
 const express = require('express')
 const expressApp = express()
+
 
 const port = process.env.PORT || 3000
 expressApp.get('/', (req, res) => {
