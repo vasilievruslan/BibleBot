@@ -9,17 +9,6 @@ const reg = /(\d*)\s*([а-я]+)\s*(\d+)(?:.(\d+))?(\s*-\s*(\d+)(?:\s*([а-я]+)\
 const hashCode = (s) => {
   return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
 };
-const express = require('express')
-const expressApp = express()
-
-
-const port = process.env.PORT || 3000
-expressApp.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-expressApp.listen(port, () => {
-  console.log(`Listening on port ${port}`)
-})
 
 const search = (query) => {
   var res = [];
@@ -41,7 +30,7 @@ const search = (query) => {
 
 const searchLink = async (query = 'Ин 3.16') => {
   let res;
-  let data = await axios.get(url, {
+  let { data } = await axios.get(url, {
     params: {
       callback: "bible",
       trans: "rus",
@@ -49,7 +38,7 @@ const searchLink = async (query = 'Ин 3.16') => {
       q: query
     }
   });
-  data = JSON.parse(data.data.split('(')[1].split(')')[0]);
+  data = JSON.parse(data.split('(')[1].split(')')[0]);
   if (data.length !== 0) {
 
     var title = data[0].h2
@@ -64,7 +53,8 @@ const searchLink = async (query = 'Ин 3.16') => {
   }
   return res;
 };
-
+bot.start((ctx) => ctx.reply('Привет, друг! Я бот, который поможет тебе быстро искать и делиться со своими друзьями любимыми стихами из библии!'))
+bot.help((ctx) => ctx.reply('Просто напиши в поле сообщения @findversebot и дальше начни вводить свой запрос.\n Например: ```@findversebot Ибо так возлюбил``` или если ты знаешь ссылку на стих который хочешь отправить тогда ```@findversebot Ин 3.16```'))
 
 bot.on('inline_query', async ({update, inlineQuery, answerInlineQuery }) => {
   // console.log(update.inline_query.from)
