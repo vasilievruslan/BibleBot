@@ -54,7 +54,7 @@ const searchLink = async (query = 'Ин 3.16') => {
   return res;
 };
 bot.start((ctx) => ctx.reply('Привет, друг! Я бот, который поможет тебе быстро искать и делиться со своими друзьями любимыми стихами из библии!'))
-bot.help((ctx) => ctx.reply('Просто напиши в поле сообщения @findversebot и дальше начни вводить свой запрос.\n Например: ```@findversebot Ибо так возлюбил``` или если ты знаешь ссылку на стих который хочешь отправить тогда ```@findversebot Ин 3.16```'))
+bot.help((ctx) => ctx.reply('Просто напиши в поле сообщения @findversebot и дальше начни вводить свой запрос.\n Например: \"@findversebot Ибо так возлюбил\" или если ты знаешь ссылку на стих который хочешь отправить тогда \"@findversebot Ин 3.16\"'))
 
 bot.on('inline_query', async ({update, inlineQuery, answerInlineQuery }) => {
   // console.log(update.inline_query.from)
